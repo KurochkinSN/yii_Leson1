@@ -6,10 +6,18 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'defaultRoute' => 'post/index',
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+            'defaultRoute' => 'post/index',
+        ],
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'S@m0tl0r',
+            'baseUrl' => '',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -38,14 +46,20 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                //'test' => 'post/test',
+                //'hello' => 'post/hello',
+                //Аналоогично записи
+                //'<action>' => 'post/<action>',
+                'post/<id:\d+>' => 'post/view', // \d+ <- регулярное выражение означает любую цифру это так же как '[0-9]+'
+                'page/<page:\d+>' => 'post/index', // при пролистывании страниц из БД оформление Url бфло красивым
+                '/' => 'post/index',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
